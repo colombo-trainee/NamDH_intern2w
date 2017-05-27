@@ -1,0 +1,12 @@
+@media (min-width: 1200px){
+	.container{
+		width: 1250px;
+		max-width: 100%;
+	}
+	.col-lg-228{
+		width: 18.2%;
+	}
+	.col-lg-772{
+		width: 77.2%;
+	}
+}
