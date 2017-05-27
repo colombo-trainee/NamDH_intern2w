@@ -26,7 +26,7 @@
                    <th class="stl-column color-column">Tên khách hàng</th>
                    <th class="stl-column color-column">Email</th>
                    <th class="stl-column color-column">Ngày đặt bàn</th>
-                   <th class="stl-column color-column">Số người tham gia</th>
+                   <th class="stl-column color-column">Số điện thoại</th>
                    {{-- <th class="stl-column color-column">Trạng thái</th> --}}
                    <th class="stl-column color-column">Hành động</th>
                 </tr>
@@ -78,7 +78,7 @@
 <script>
  function alertDel(id){
 
-  var path = "{{URL::asset('')}}nook-tables/" + id;
+  var path = "{{URL::asset('')}}book-tables/" + id;
 
     swal({
         title: "Bạn có chắc muốn xóa?",

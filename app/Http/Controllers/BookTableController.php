@@ -8,6 +8,9 @@ use DB;
 use Log;
 class BookTableController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -49,13 +52,14 @@ class BookTableController extends Controller
                     'client_name' => 'required',
                     'email'       => 'required',
                     'date'        => 'required',
-                    'party_number'=> 'required',
+                    'party_number'=> 'required|digits_between:9,11',
                 ],[
                     'client_name.required'  => 'Name không được bỏ trống',
                     'email.required'        => 'Email không được để trống',
                     'date.required'         => 'Ngày đặt lịch không được để trống',
-                    'party_number'          => 'Số lượng người tham gia không được để trống',
+                    'party_number.required'          => 'Số điện thoại không được để trống',
                     'email.email'           => 'Phải đúng định dạng mail',
+                    'party_number.digits_between' => 'Số điện thoại phải từ 9 đến 11 số'  
                 ]);
             
             BookTable::create($data);
@@ -83,7 +87,7 @@ class BookTableController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
@@ -94,7 +98,10 @@ class BookTableController extends Controller
      */
     public function edit($id)
     {
-        //
+         $book = BookTable::find($id);
+        return view("restaurant.bookTables.editBook",[
+                'book'      => $book,
+            ]);  
     }
 
     /**
@@ -106,7 +113,40 @@ class BookTableController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->all();
+
+        unset($data['_token']);
+        unset($data['_method']);
+
+        DB::beginTransaction();
+
+        try{
+            $this->validate($request,[
+                    'client_name' => 'required',
+                    'email'       => 'required',
+                    'date'        => 'required',
+                    'party_number'=> 'required|digits_between:9,11',
+                ],[
+                    'client_name.required'  => 'Name không được bỏ trống',
+                    'email.required'        => 'Email không được để trống',
+                    'date.required'         => 'Ngày đặt lịch không được để trống',
+                    'party_number.required'          => 'Số điện thoại không được để trống',
+                    'email.email'           => 'Phải đúng định dạng mail',
+                    'party_number.digits_between' => 'Số điện thoại phải từ 9 đến 11 số'  
+                ]);
+
+            BookTable::find($id)->update($data);
+
+            DB::commit();
+            return Redirect(route('book-tables.index'));
+        } catch (Exception $e){
+            Log::info("Không thể chỉnh sửa book table");
+            DB::rollback();
+            response()->json([
+                    'error' => true,
+                    'message' => 'Internal Server Error'
+                ], 500);
+        }
     }
 
     /**
@@ -117,6 +157,21 @@ class BookTableController extends Controller
      */
     public function destroy($id)
     {
-        //
+        DB::beginTransaction();
+
+        try{
+
+            BookTable::find($id)->delete();
+
+            DB::commit();
+            return Redirect(route('book-tables.index'));
+        } catch (Exception $e){
+            Log::info("Không thể chỉnh sửa book table");
+            DB::rollback();
+            response()->json([
+                    'error' => true,
+                    'message' => 'Internal Server Error'
+                ], 500);
+        }
     }
 }

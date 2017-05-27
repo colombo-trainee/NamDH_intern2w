@@ -18,7 +18,7 @@ class CreateModelsBookTablesTable extends Migration
             $table->string('client_name');
             $table->string('email');
             $table->date('date');
-            $table->tinyInteger('party_number');
+            $table->string('party_number');
             $table->timestamps();
         });
     }

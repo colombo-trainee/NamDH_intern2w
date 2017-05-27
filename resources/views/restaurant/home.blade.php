@@ -128,26 +128,27 @@
 						<p> If you’ve been to one of our restaurants, you’ve seen – and tasted - what keeps our customer coming back for more.Perfect materials and freshly baked food.</p>
 						<p class="text-2">Delicious Lambda cakes, muffins,and gourmet coffes make us hard to resist! Stop in today and check us out!Perfect materials and freshly baked food.</p>
 						
-						<form method="POST" action="{{ route('book-tables.store')}}">
+						<form method="POST" action="{{ route('book-tables.store')}}" id="formBook">
 							{{ csrf_field() }}
 							  <div class="form-group">
 							    <label for="name">Name</label>
-							    <input type="text" name="client_name" class="form-control" placeholder="your name *" required="required">
+							    <input type="text" name="client_name" class="form-control" placeholder="your name *" required="required" value="{{ old('client_name')}}">
 							  
 							  </div>
 							  <div class="form-group">
 							    <label for="email">Email</label>
-							    <input type="email" name="email" class="form-control" placeholder="your email *" required="required">
+							    <input type="email" name="email" class="form-control" placeholder="your email *" required="required" value="{{ old('email')}}">
 							  </div>
 							  <div class="form-group">
 							  	<label for="date">Date</label>
-							    <input type="date" name="date" class="form-control" placeholder="date *" required="required">
+							    <input type="date" name="date" class="form-control" placeholder="date *" required="required" value="{{ old('date')}}">
 							    <span><i class="fa fa-calendar" aria-hidden="true"></i></span>
 							  </div>  
 							  <div class="form-group">
 							  	<label for="party">Party Number</label>
-							  	<input type="number"  name="party_number" class="form-control" placeholder="Party Number *" required="required">
+							  	<input type="number"  name="party_number" class="form-control" placeholder="Party Number *" required="required" value="{{ old('party_number')}}">
 							  </div>
+							  <p style="color: red">{{ $errors->first('party_number') }}</p>
 							  <button class="btn btn-warning" type="submit">Book now!</button> 
 						</form>
 					</div>
