@@ -45,13 +45,13 @@
                 <button type="submit" class="btn green uppercase">Đăng Nhập</button>
                 <label class="rememberme check">
                     <input type="checkbox" name="remember" value="1" />Ghi nhớ</label>
-                <a href="#" id="forget-password" class="forget-password">Quên mật khẩu?</a>
+                <a href="#" id="forget-password" class="forget-password">Quên mật khẩu</a>
             </div>
-            <!-- <div class="create-account">
+            <div class="create-account">
                 <p>
-                    <a href="{{ url('/register') }}" id="register-btn" class="uppercase">Tạo Tài Khoản</a>
+                    <a href="{{ route("register") }}" id="register-btn" class="uppercase">Tạo Tài Khoản</a>
                 </p>
-            </div> -->
+            </div>
         </form>
         </div>
 </div>
