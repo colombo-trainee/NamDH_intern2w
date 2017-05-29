@@ -367,7 +367,7 @@
                                 </a>
                             </li>
                         <!-- START BOOK TABLE-->
-                           <li class="nav-item {{ Request::is('book-tables*') ? 'active open' : '' }}  ">
+                           <li class="nav-item {{ Request::is('menu-top*') ? 'active open' : '' }}  ">
                                 <a href="{{ route('menu-top.index') }}" class="nav-link nav-toggle">
                                     <i class="fa fa-book"></i>
                                     <span class="title">Quản Lý Danh Mục</span>

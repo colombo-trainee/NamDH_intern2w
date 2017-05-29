@@ -11,7 +11,7 @@ class MenuController extends Controller
     public function index(){
 
     	$categories = Menu::orderBy("id","ASC")->paginate(5);
-    	$menuTop 	= MenuTop::all();
+    	$menuTop 	= MenuTop::orderBy("id","ASC")->paginate(6);
     	return view('restaurant.home',[
     			'categories'	=> $categories,
     			'menuTop'		=> $menuTop,

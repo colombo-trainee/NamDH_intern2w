@@ -45,7 +45,7 @@
 
                         <div class="form-group form-md-line-input form-md-floating-label {{ $errors->has('party_number') ? 'has-error' : '' }}">
                            <input type="number" class="form-control" id="party_number" name="party_number" value="{{ $book->party_number }}">
-                           <label for="party_number">Ngày đặt bàn<span class="requireds"> (*)</span></label>
+                           <label for="party_number">Số điện thoại<span class="requireds"> (*)</span></label>
                         </div>
                         <p class="font-red-mint">{{ $errors->first('party_number') }}</p>
 

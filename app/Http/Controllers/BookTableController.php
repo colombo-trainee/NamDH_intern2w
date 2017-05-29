@@ -6,11 +6,9 @@ use Illuminate\Http\Request;
 use App\Models\BookTable;
 use DB;
 use Log;
+use Response;
 class BookTableController extends Controller
 {
-    public function __construct(){
-        $this->middleware('auth');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -51,32 +49,33 @@ class BookTableController extends Controller
             $this->validate($request,[
                     'client_name' => 'required',
                     'email'       => 'required',
-                    'date'        => 'required',
+                    'date'        => 'required|after:today',
                     'party_number'=> 'required|digits_between:9,11',
                 ],[
                     'client_name.required'  => 'Name không được bỏ trống',
                     'email.required'        => 'Email không được để trống',
                     'date.required'         => 'Ngày đặt lịch không được để trống',
+                    'date.after'           => 'Vui lòng không chọn ngày quá khứ',
                     'party_number.required'          => 'Số điện thoại không được để trống',
                     'email.email'           => 'Phải đúng định dạng mail',
-                    'party_number.digits_between' => 'Số điện thoại phải từ 9 đến 11 số'  
+                    'party_number.digits_between' => 'Số điện thoại phải từ 9 đến 11 số',
+                   
                 ]);
+            $data['date'] = date("Y-m-d",strtotime($data['date']));
             
             BookTable::create($data);
 
             DB::commit();
-            return Redirect(route('book-tables.index'));
+            return Response::json($data);
 
         } catch(Exception $e){
             Log::info("Không thể đặt lịch");
             DB::rollback();
             response()->json([
                     'error' => true,
-                    'message' => 'Internal Server Error'
+                    'message' => 'Internal Server Error',
                 ], 500);
         }
-
-
     }
 
     /**
@@ -164,7 +163,11 @@ class BookTableController extends Controller
             BookTable::find($id)->delete();
 
             DB::commit();
-            return Redirect(route('book-tables.index'));
+            return response()->json([
+                    'error' => false,
+                    'message' => 'Delete success!'
+                ], 200);
+
         } catch (Exception $e){
             Log::info("Không thể chỉnh sửa book table");
             DB::rollback();

@@ -128,33 +128,94 @@
 						<p> If you’ve been to one of our restaurants, you’ve seen – and tasted - what keeps our customer coming back for more.Perfect materials and freshly baked food.</p>
 						<p class="text-2">Delicious Lambda cakes, muffins,and gourmet coffes make us hard to resist! Stop in today and check us out!Perfect materials and freshly baked food.</p>
 						
-						<form method="POST" action="{{ route('book-tables.store')}}" id="formBook">
+						<form method="POST" action="" id="formBook">
 							{{ csrf_field() }}
 							  <div class="form-group">
 							    <label for="name">Name</label>
-							    <input type="text" name="client_name" class="form-control" placeholder="your name *" required="required" value="{{ old('client_name')}}">
-							  
+							    <input type="text" name="client_name" id="client_name" class="form-control" placeholder="your name *" required="required">
+							  	
+							  	<p style="color: red;display: none;" class="error errorName"></p>
 							  </div>
 							  <div class="form-group">
 							    <label for="email">Email</label>
-							    <input type="email" name="email" class="form-control" placeholder="your email *" required="required" value="{{ old('email')}}">
+							    <input type="email" name="email" id="email" class="form-control" placeholder="your email *" required="required">
+
+							    <p style="color: red;display: none;" class="error errorEmail"></p>
 							  </div>
 							  <div class="form-group">
 							  	<label for="date">Date</label>
-							    <input type="date" name="date" class="form-control" placeholder="date *" required="required" value="{{ old('date')}}">
+							    <input type="date" name="date" id="date" class="form-control" placeholder="date *" required="required">
 							    <span><i class="fa fa-calendar" aria-hidden="true"></i></span>
+
+						     	<p style="color: red;display: none;" class="error errorDate"></p>
 							  </div>  
 							  <div class="form-group">
 							  	<label for="party">Party Number</label>
-							  	<input type="number"  name="party_number" class="form-control" placeholder="Party Number *" required="required" value="{{ old('party_number')}}">
+							  	<input type="number"  name="party_number" id="party_number" class="form-control" placeholder="Party Number *" required="required">
+							  	<p style="color: red;display: none;" class="error errorPartyNumber"></p>
 							  </div>
-							  <p style="color: red">{{ $errors->first('party_number') }}</p>
-							  <button class="btn btn-warning" type="submit">Book now!</button> 
+							  	
+							  <button class="btn btn-warning" type="button" id="book">Book now!</button> 
 						</form>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+	<div id="snackbar">Đặt bàn thành công..</div>
 </article>
+<script>
+	$(document).ready(function() {
+		
+			$.ajaxSetup({
+				headers:{
+					"X-CSRF-TOKEN": $("meta[name='_token']").attr('content')
+				}
+			});
+
+			$(document.body).on('click','#book', function() {
+
+				var client_name = $('#client_name').val();
+				var email = $("#email").val();
+				var date = $("#date").val();
+				var party_number = Number($("#party_number").val());
+				
+				$.ajax({
+					url: "{{ route('book-tables.store') }}",
+					type: 'POST',
+					dataType: 'JSON',
+					data: {'client_name':client_name,'email': email,'date': date,'party_number': party_number},
+					success: function(data){
+						var x = $('#snackbar');
+			 			console.log(data);
+			 			x.addClass('show');
+			 			setTimeout(function(){ x = x.removeClass("show"); }, 3000);
+
+			 			$('#client_name').val("");
+			 			$('#email').val("");
+			 			$('#date').val("");
+			 			$('#party_number').val("");
+			 			$('.error').hide();
+			 		},
+	            	error: function (data) {
+	            		var error = data.responseJSON;
+	                	console.log('Error:', error);
+	                	$('.error').hide();
+	                	if(error.client_name != undefined){
+	                		$('.errorName').show().text(error.client_name[0]);
+	                	}
+	                	if(error.email != undefined){
+	                		$('.errorEmail').show().text(error.email[0]);
+	                	}
+	                	if(error.date != undefined){
+	                		$('.errorDate').show().text(error.date[0]);
+	                	}
+	                	if(error.party_number != undefined){
+	                		$('.errorPartyNumber').show().text(error.party_number[0]);
+	                	}
+	            	}
+				});
+			});
+	});
+</script>
 @include('restaurant.footer')
