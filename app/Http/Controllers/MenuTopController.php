@@ -29,7 +29,8 @@ class MenuTopController extends Controller
     public function create()
     {
 
-        $parentId = MenuTop::select('id')->where("parentId",0)->get();
+        $parentId = MenuTop::select('*')->where("parentId",0)->get();
+
         return view('restaurant.menuTop.createMenu',[
                 'parentId' => $parentId,
             ]);
@@ -87,7 +88,12 @@ class MenuTopController extends Controller
      */
     public function edit($id)
     {
-        //
+        $parentId = MenuTop::select('id')->where("parentId",0)->get();
+        $category = MenuTop::find($id);
+        return view('restaurant.menuTop.editMenuTop',[
+                'category' => $category,
+                'parentId' => $parentId,
+            ]);
     }
 
     /**
@@ -99,7 +105,30 @@ class MenuTopController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $data = $request->all();
+        unset($data['_token']);
+        unset($data['_method']);
+        DB::beginTransaction();
+
+        try{
+            $this->validate($request,[
+                    'name' => 'required',
+                ],[
+                    'name.required' => 'Tên danh mục không được bỏ trống',
+                ]);
+            MenuTop::find($id)->update($data);
+
+            DB::commit();
+            return Redirect(route("menu-top.index"));
+
+        } catch(Exception $e){
+            Log::info("không thể thêm mới danh mục");
+            DB::rollback();
+            response()->json([
+                    'error' => true,
+                    'message' => 'Internal Server Error'
+                ], 500);
+        } 
     }
 
     /**
@@ -110,6 +139,34 @@ class MenuTopController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $check  = MenuTop::where("parentId",$id)->count();
+
+        DB::beginTransaction();
+
+        try{
+            if($check == 0){
+                MenuTop::find($id)->delete();
+
+                DB::commit();
+                return response()->json([
+                        'error' => false,
+                        'message' => 'Delete success!'
+                    ], 200);
+            }else{
+                DB::rollback();
+                return response()->json([
+                    'error' => true,
+                    'message' => 'Cannot delete this cate!!!'
+                ], 500);
+            }
+
+        }catch(Exception $e){
+            Log::info("Không thể chỉnh sửa book table");
+            DB::rollback();
+            response()->json([
+                    'error' => true,
+                    'message' => 'Internal Server Error'
+                ], 500);
+        }
     }
 }

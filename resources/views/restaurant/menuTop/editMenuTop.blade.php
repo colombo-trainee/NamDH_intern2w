@@ -1,4 +1,3 @@
-
 @extends('layouts.master')
 @section('head')
 <!-- include summernote css/js-->
@@ -8,7 +7,7 @@
 <div class="portlet light bordered" id="form_wizard_1">
    <div class="portlet-title">
       <div class="caption">
-         <span class="caption-subject font-red bold uppercase"><i class="fa fa-plus-circle" aria-hidden="true"></i> TẠO MỚI DANH MỤC MENU TOP</span>
+         <span class="caption-subject font-red bold uppercase"><i class="fa fa-plus-circle" aria-hidden="true"></i> CHỈNH SỬA DANH MỤC MENU  </span>
       </div>
    </div>
    {{-- <h3 class="block text-center">Thông tin cơ bản</h3> --}}
@@ -18,7 +17,7 @@
         <strong>Lỗi!</strong> Hãy kiểm tra lại dữ liệu bạn vừa nhập vào.
       </div>
     @endif --}}
-      <form  action="{{route('menu-top.store')}}" id="frmCreateMenu" name="frmCreateMenu" method="POST" enctype="multipart/form-data" autocomplete="off">
+      <form  action="{{route('menu-top.update',$category->id)}}" name="frmUpdateCate" method="POST" enctype="multipart/form-data" autocomplete="off">
          {{ csrf_field() }}
          <div class="form-wizard">
             <div class="form-body">
@@ -27,7 +26,7 @@
                      <div class="form-body col-xs-12 col-sm-12 col-md-8 col-md-offset-2 col-lg-10 col-lg-offset-1">
 
                         <div class="form-group form-md-line-input form-md-floating-label {{ $errors->has('name') ? 'has-error' : '' }}">
-                           <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}">
+                           <input type="text" class="form-control" id="name" name="name" value="{{ $category->name }}">
                            <label for="name">Tên danh mục <span class="requireds"> (*)</span></label>
                         </div>
                         <p class="font-red-mint">{{ $errors->first('name') }}</p>
@@ -36,12 +35,12 @@
                            <select  id = "parentId" class="form-control" name="parentId">
                            <option value="0" Selected>0</option>
                            @foreach ($parentId as $id)
-                             <option value="{{$id->id}}">{{$id->name}}</option>
+                             <option value="{{$id->id}}" @if ($id->id == $category->parentId) Selected @endif>{{$id->id}}</option>
                            @endforeach
                            </select>
                            <label for="status">Các Chỉ Mục<span class="requireds"> (*)</span></label>
                         </div>
-                       
+
                      </div>
                   </div>
                   </div>
@@ -52,9 +51,10 @@
                     <a href="{{route('menu-top.index')}}" class="btn btn-outline green button-pre btn-circle"> Quay Lại
                     </a>               
                    <button type="submit" class="btn green btn-circle">
-                   Thêm mới
+                   Update
                       {{-- <i class="fa fa-check"></i> --}}
                     </button>
+                    <input type="hidden" name="_method" value="PUT">
                </div>
             </div>
          </div>

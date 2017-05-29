@@ -44,7 +44,7 @@
                       @endif
                     </td> --}}
                     <td class="text-center"> 
-                        <a href="{{route('menu-top.show', $category->name)}}" class="btn btn-outline btn-circle btn-sm blue">
+                        <a href="{{route('menu-top.show', $category->id)}}" class="btn btn-outline btn-circle btn-sm blue">
                             <i class="fa fa-eye" aria-hidden="true"></i> Xem 
                         </a>
                         <a href="{{route('menu-top.edit', $category->id)}}" class="btn btn-outline btn-circle green btn-sm purple">
