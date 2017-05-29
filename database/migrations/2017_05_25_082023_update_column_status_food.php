@@ -13,8 +13,8 @@ class UpdateColumnStatusFood extends Migration
      */
     public function up()
     {
-        Schema::table('list_foods', function (Blueprint $table) {
-                if(!Schema::hasColumn('list_foods','status')){
+        Schema::table('foods', function (Blueprint $table) {
+                if(!Schema::hasColumn('foods','status')){
                     $table->tinyInteger('status')->default(0)->comment('0: default, 1: special');
                 }
                 
