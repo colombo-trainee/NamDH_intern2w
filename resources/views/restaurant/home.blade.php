@@ -75,6 +75,7 @@
 											<span class="pull-right">${{$food->price}}</span>
 										</div>
 										<div class="text_details">{{$food->ingredients}}</div>
+										<div class="images_details"><img src="{{url("$food->images")}}" alt=""></div>
 									</li>
 								@endif
 								
@@ -166,8 +167,6 @@
 </article>
 <meta name="_token" content="{!! csrf_token() !!}" />
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-
 <script>
 	$(document).ready(function() {
 		
@@ -217,9 +216,17 @@
 	                	if(error.party_number != undefined){
 	                		$('.errorPartyNumber').show().text(error.party_number[0]);
 	                	}
+	                	$(document.body).on('change','input', function() {
+	                		if($(this).val() != " "){
+								$(this).next("p").hide();
+	                		}
+							
+						});
 	            	}
 				});
 			});
+
+			
 	});
 </script>
 @include('restaurant.footer')

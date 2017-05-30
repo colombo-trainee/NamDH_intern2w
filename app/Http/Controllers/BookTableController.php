@@ -48,16 +48,16 @@ class BookTableController extends Controller
         try {
             $this->validate($request,[
                     'client_name' => 'required',
-                    'email'       => 'required',
+                    'email'       => 'required|email',
                     'date'        => 'required|after:today',
                     'party_number'=> 'required|digits_between:9,11',
                 ],[
                     'client_name.required'  => 'Name không được bỏ trống',
                     'email.required'        => 'Email không được để trống',
+                    'email.email'        =>     'Email phải đúng định dang',
                     'date.required'         => 'Ngày đặt lịch không được để trống',
                     'date.after'           => 'Vui lòng không chọn ngày quá khứ',
                     'party_number.required'          => 'Số điện thoại không được để trống',
-                    'email.email'           => 'Phải đúng định dạng mail',
                     'party_number.digits_between' => 'Số điện thoại phải từ 9 đến 11 số',
                    
                 ]);
