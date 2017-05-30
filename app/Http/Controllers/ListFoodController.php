@@ -142,10 +142,9 @@ class ListFoodController extends Controller
                 'ingredients.required'       =>   'Trường ingredients không được phép để trống',
                
             ]);
-            $s3 = \Storage::disk('s3');
+            
             if($request->hasFile('images')){
                 $data['images'] = $request->file('images')->storeAs('images',time().'.jpg');
-                $s3->put($data['images'],'public');
             }
             
             
