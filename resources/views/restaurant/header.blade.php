@@ -27,10 +27,6 @@
 	<script src="{{ url('js/bootstrap.min.js') }}"></script>
 	
 	{{-- Masony --}}
-	
-	<meta name="_token" content="{!! csrf_token() !!}" />
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-
 	<script src="js/masonry.pkgd.min.js"></script>
 	<script>
 		$(document).ready(function(){
