@@ -68,7 +68,7 @@ class ListFoodController extends Controller
                
             ]);
 
-            $data['images'] = $request->file('images')->storeAs('images',time().'.jpg','s3');
+            $data['images'] = $request->file('images')->store('images',time().'.jpg','s3');
            
             Food::create($data);
 
@@ -143,7 +143,7 @@ class ListFoodController extends Controller
                
             ]);
             if($request->hasFile('images')){
-                $data['images'] = $request->file('images')->storeAs('images',time().'.jpg','s3');
+                $data['images'] = $request->file('images')->store('images',time().'.jpg','s3');
             }
             
             
