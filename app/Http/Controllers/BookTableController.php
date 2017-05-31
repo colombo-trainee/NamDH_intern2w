@@ -177,25 +177,12 @@ class BookTableController extends Controller
      */
     public function destroy($id)
     {
-        DB::beginTransaction();
-
-        try{
-
-            BookTable::find($id)->delete();
-
-            DB::commit();
-            return response()->json([
-                    'error' => false,
-                    'message' => 'Delete success!'
-                ], 200);
-
-        } catch (Exception $e){
-            Log::info("Không thể chỉnh sửa book table");
-            DB::rollback();
-            response()->json([
-                    'error' => true,
-                    'message' => 'Internal Server Error'
-                ], 500);
-        }
+        
+        BookTable::find($id)->delete();
+        
+        return response()->json([
+                'error' => false,
+                'message' => 'Delete success!'
+            ], 200);
     }
 }

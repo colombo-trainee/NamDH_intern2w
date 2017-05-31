@@ -54,19 +54,24 @@ class ListFoodController extends Controller
         DB::beginTransaction();
 
         try{
-            $this->validate($request,[
-                'name'          =>  'required|max:255',
-                'price'         =>  'required',
-                'images'        =>  'required|image|max:1000',
-                'ingredients'   =>  'required',
-            ],[
-                'name.required'     =>  'Trường này không được phép để trống',
+            $message = [
+               'name.required'     =>  'Trường này không được phép để trống',
                 'name.max'          => 'Tên danh mục không được vượt qua 255 ký tự',
                 'price.required'    =>   'Trường price không được phép để trống',
                 'images.required'            =>   'Trường images không được phép để trống',
                 'ingredients.required'       =>   'Trường ingredients không được phép để trống',
-               
-            ]);
+            ];
+
+            $validator =  Validator::make($data, [
+                'name'          =>  'required|max:255',
+                'price'         =>  'required',
+                'images'        =>  'required|image|max:1000',
+                'ingredients'   =>  'required',
+            ],$message);
+
+            if($validator->fails()){
+                return redirect()->back()->withInput($data)->withErrors($validator);
+            }
 
             $data['images'] = $request->file('images')->storeAs('images',time().'.jpg');
            
@@ -131,17 +136,22 @@ class ListFoodController extends Controller
          DB::beginTransaction();
 
         try{
-            $this->validate($request,[
-                'name'          =>  'required|max:255',
-                'price'         =>  'required',
-                'ingredients'   =>  'required',
-            ],[
+            $message = [
                 'name.required'     =>  'Trường này không được phép để trống',
                 'name.max'          => 'Tên danh mục không được vượt qua 255 ký tự',
                 'price.required'    =>   'Trường price không được phép để trống',
                 'ingredients.required'       =>   'Trường ingredients không được phép để trống',
                
-            ]);
+            ];
+            $validator =  Validator::make($data, [
+                'name'          =>  'required|max:255',
+                'price'         =>  'required',
+                'ingredients'   =>  'required',
+            ],$message);
+
+            if($validator->fails()){
+                return redirect()->back()->withInput($data)->withErrors($validator);
+            }
             
             if($request->hasFile('images')){
                 $data['images'] = $request->file('images')->storeAs('images',time().'.jpg');
@@ -171,24 +181,12 @@ class ListFoodController extends Controller
      */
     public function destroy($id)
     {
-         DB::beginTransaction();
-        try {
-
-            Food::find($id)->delete();
-            DB::commit();
+            $check = Food::find($id)->delete();
 
             return response()->json([
                     'error' => false,
                     'message' => 'Delete success!'
                 ], 200);
 
-        } catch(Exception $e) {
-            Log::info('Can not delete food has id = ' . $id);
-            DB::rollback();
-            response()->json([
-                    'error' => true,
-                    'message' => 'Internal Server Error'
-                ], 500);
-        }
     }
 }

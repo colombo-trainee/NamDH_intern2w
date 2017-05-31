@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\MenuTop;
 use DB;
 use Log;
+use Validator;
 class MenuTopController extends Controller
 {
     /**
@@ -49,11 +50,16 @@ class MenuTopController extends Controller
         DB::beginTransaction();
 
         try{
-            $this->validate($request,[
-                    'name' => 'required',
-                ],[
+            $message = [
                     'name.required' => 'Tên danh mục không được bỏ trống',
-                ]);
+                ];
+
+            $validator =  Validator::make($data, [
+                'name'   =>  'required',
+            ],$message);
+            if($validator->fails()){
+                return redirect()->back()->withInput($data)->withErrors($validator);
+            }
             MenuTop::create($data);
 
             DB::commit();
@@ -111,11 +117,16 @@ class MenuTopController extends Controller
         DB::beginTransaction();
 
         try{
-            $this->validate($request,[
-                    'name' => 'required',
-                ],[
+            $message = [
                     'name.required' => 'Tên danh mục không được bỏ trống',
-                ]);
+                ];
+
+            $validator =  Validator::make($data, [
+                'name'   =>  'required',
+            ],$message);
+            if($validator->fails()){
+                return redirect()->back()->withInput($data)->withErrors($validator);
+            }
             MenuTop::find($id)->update($data);
 
             DB::commit();

@@ -54,12 +54,17 @@ class ListMenuController extends Controller
     	DB::beginTransaction();
 
     	try{
-    		$this->validate($request,[
-    			'name' => "required|max:255",
-    		],[
-    			'name.required' => "Không được bỏ trống trường này",
-    			'name.max' 		=> "Tên danh mục không được vượt qua 255 ký tự",
-    		]);
+            $message = [
+                'name.required' => "Không được bỏ trống trường này",
+                'name.max'      => "Tên danh mục không được vượt qua 255 ký tự",
+            ];
+    		$validator =  Validator::make($data, [
+                'name'          =>  'required|max:255',
+            ],$message);
+
+            if($validator->fails()){
+                return redirect()->back()->withInput($data)->withErrors($validator);
+            }
 
     		Menu::create($data);
     		DB::commit();
@@ -122,12 +127,17 @@ class ListMenuController extends Controller
     	DB::beginTransaction();
 
     	try{
-    		$this->validate($request,[
-    			'name' => "required|max:255",
-    		],[
-    			'name.required' => "Không được bỏ trống trường này",
-    			'name.max' 		=> "Tên danh mục không được vượt qua 255 ký tự",
-    		]);
+    		$message = [
+                'name.required' => "Không được bỏ trống trường này",
+                'name.max'      => "Tên danh mục không được vượt qua 255 ký tự",
+            ];
+            $validator =  Validator::make($data, [
+                'name'          =>  'required|max:255',
+            ],$message);
+
+            if($validator->fails()){
+                return redirect()->back()->withInput($data)->withErrors($validator);
+            }
 
     		Menu::find($id)->update($data);
     		DB::commit();
@@ -151,24 +161,14 @@ class ListMenuController extends Controller
      */
     public function destroy($id)
     {
-        DB::beginTransaction();
-        try {
+        
+        Menu::find($id)->delete();
+       
 
-            Menu::find($id)->delete();
-            DB::commit();
+        return response()->json([
+                'error' => false,
+                'message' => 'Delete success!'
+            ], 200);
 
-            return response()->json([
-                    'error' => false,
-                    'message' => 'Delete success!'
-                ], 200);
-
-        } catch(Exception $e) {
-            Log::info('Can not delete cate has id = ' . $id);
-            DB::rollback();
-            response()->json([
-                    'error' => true,
-                    'message' => 'Internal Server Error'
-                ], 500);
-        }
     }
 }
