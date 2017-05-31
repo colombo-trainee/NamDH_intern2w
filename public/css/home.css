@@ -410,12 +410,13 @@ form{
 .form-group p{
 	font-size:12px;
 	position: absolute;
-	top:40px;
+	top: 60px;
+  	padding: 0;
 }
 .form-group i{
 	position: absolute;
-	right: 24px;
-	bottom: 7px;
+	right: 29px;
+	bottom: 10px;
 }
 .form-control{
 	width: 90%;
@@ -425,7 +426,7 @@ form{
 form button{
 	padding: 6px 45px !important;
 	margin-right: 50px;
-	margin-top: 7px;
+	margin-top: 27px;
 	border-radius: 0 !important;
 }
 .reservations_right label{

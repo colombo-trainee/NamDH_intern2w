@@ -141,32 +141,19 @@ class MenuTopController extends Controller
     {
         $check  = MenuTop::where("parentId",$id)->count();
 
-        DB::beginTransaction();
-
-        try{
             if($check == 0){
                 MenuTop::find($id)->delete();
-
-                DB::commit();
                 return response()->json([
                         'error' => false,
                         'message' => 'Delete success!'
                     ], 200);
             }else{
-                DB::rollback();
                 return response()->json([
                     'error' => true,
                     'message' => 'Cannot delete this cate!!!'
                 ], 500);
             }
 
-        }catch(Exception $e){
-            Log::info("Không thể chỉnh sửa book table");
-            DB::rollback();
-            response()->json([
-                    'error' => true,
-                    'message' => 'Internal Server Error'
-                ], 500);
-        }
+       
     }
 }

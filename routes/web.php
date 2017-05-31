@@ -11,28 +11,34 @@
 |
 */
 
-Route::get('/', function () {
-    return view('auth.login');
-});
+
+// route home admin
+Route::get('/','MenuController@index')->name('menu.index');
+
 
 Auth::routes();
 
-// route home admin
-Route::get('/home', 'HomeController@index')->name('home');
+Route::group(['prefix'=>'admin'],function(){
+	
+	Route::get('/login', function () {
+    	return view('auth.login');
+	});	
+	// route Menu phía user
+	Route::get('/home', 'HomeController@index')->name('home');
+	// route Category phía admin
+	Route::resource('/list-menu','ListMenuController');
 
-// route Menu phía user
-Route::get('/menu','MenuController@index')->name('menu.index');
+	// route Food admin
 
-// route Category phía admin
-Route::resource('/list-menu','ListMenuController');
+	Route::resource('/list-food','ListFoodController');
 
-// route Food admin
+	// route Book Tables admin
+	Route::resource('/book-tables','BookTableController');
 
-Route::resource('/list-food','ListFoodController');
+	// route menu Top 
+	Route::resource('/menu-top','MenuTopController');
 
-// route Book Tables admin
-Route::resource('/book-tables','BookTableController');
+	Route::get('/users','UserController@index')->name('users.index');
+});
 
-// route menu Top 
-Route::resource('/menu-top','MenuTopController');
 

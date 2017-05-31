@@ -321,10 +321,10 @@
                                 </a>
                             </li>
 
-                            <li class="nav-item {{ Request::is('user*') ? 'active open' : '' }}  ">
-                                <a href="{{-- {{route('users.index')}} --}}" class="nav-link nav-toggle">
+                            <li class="nav-item {{ Request::is('users*') ? 'active open' : '' }}  ">
+                                <a href="{{route('users.index')}}" class="nav-link nav-toggle">
                                     <i class="fa fa-users"></i>
-                                    <span class="title">Quản Lý Tài Khoản</span>
+                                    <span class="title">Users</span>
                                 </a>
                             </li>
 

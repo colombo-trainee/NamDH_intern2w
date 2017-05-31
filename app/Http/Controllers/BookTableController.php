@@ -7,6 +7,7 @@ use App\Models\BookTable;
 use DB;
 use Log;
 use Response;
+use Illuminate\Support\Facades\Validator;
 class BookTableController extends Controller
 {
     /**
@@ -46,21 +47,30 @@ class BookTableController extends Controller
         DB::beginTransaction();
 
         try {
-            $this->validate($request,[
-                    'client_name' => 'required',
-                    'email'       => 'required|email',
-                    'date'        => 'required|after:today',
-                    'party_number'=> 'required|digits_between:9,11',
-                ],[
-                    'client_name.required'  => 'Name không được bỏ trống',
-                    'email.required'        => 'Email không được để trống',
-                    'email.email'        =>     'Email phải đúng định dang',
-                    'date.required'         => 'Ngày đặt lịch không được để trống',
-                    'date.after'           => 'Vui lòng không chọn ngày quá khứ',
-                    'party_number.required'          => 'Số điện thoại không được để trống',
-                    'party_number.digits_between' => 'Số điện thoại phải từ 9 đến 11 số',
-                   
-                ]);
+            
+            $message = [
+                'client_name.required' => "Name must be required",
+                'email.required'       => "Email must be required",
+                'email.email'          => "Email must be in correct format",
+                'date.required'        => "Date must be required",
+                'date.after'           => "Date must after today",
+                'party_number.required'=> "party_number must be required",
+                'party_number.digits_between:9,11' => "party_number between 9 - 11 digits",
+            ];
+            $validator =  Validator::make($data, [
+                'client_name'   =>  'required',
+                'email'         =>  'required|email|unique:book_tables',
+                'date'          =>  'required|after:today',
+                'party_number'  =>  'required|digits_between:9,11',
+            ],$message);
+
+            if($validator->fails()){
+                return Response::json([
+                    'error' => true,
+                    'message' => $validator->errors(),
+                    ],500);
+            }
+
             $data['date'] = date("Y-m-d",strtotime($data['date']));
             
             BookTable::create($data);
@@ -120,19 +130,30 @@ class BookTableController extends Controller
         DB::beginTransaction();
 
         try{
-            $this->validate($request,[
-                    'client_name' => 'required',
-                    'email'       => 'required',
-                    'date'        => 'required',
-                    'party_number'=> 'required|digits_between:9,11',
-                ],[
-                    'client_name.required'  => 'Name không được bỏ trống',
-                    'email.required'        => 'Email không được để trống',
-                    'date.required'         => 'Ngày đặt lịch không được để trống',
-                    'party_number.required'          => 'Số điện thoại không được để trống',
-                    'email.email'           => 'Phải đúng định dạng mail',
-                    'party_number.digits_between' => 'Số điện thoại phải từ 9 đến 11 số'  
-                ]);
+
+            $message = [
+                'client_name.required' => "Name must be required",
+                'email.required'       => "Email must be required",
+                'email.email'          => "Email must be in correct format",
+                'date.required'        => "Date must be required",
+                'date.after'           => "Date must after today",
+                'party_number.required'=> "party_number must be required",
+                'party_number.digits_between:9,11' => "party_number between 9 - 11 digits",
+            ];
+            $validator =  Validator::make($data, [
+                'client_name'   =>  'required',
+                'email'         =>  'required|email|unique:book_tables',
+                'date'          =>  'required|after:today',
+                'party_number'  =>  'required|digits_between:9,11',
+            ],$message);
+
+            if($validator->fails()){
+                DB::rollback();
+                return response()->json([
+                    'error' => true,
+                    'message' => 'Internal Server Error'
+                ], 500);
+            }
 
             BookTable::find($id)->update($data);
 

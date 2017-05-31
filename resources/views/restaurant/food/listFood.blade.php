@@ -80,7 +80,7 @@
 <script>
  function alertDel(id){
 
-  var path = "{{URL::asset('')}}list-food/" + id;
+  var path = "{{URL::asset('')}}/admin/list-food/" + id;
 
     swal({
         title: "Bạn có chắc muốn xóa?",

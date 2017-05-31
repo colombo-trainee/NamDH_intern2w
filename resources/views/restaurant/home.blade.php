@@ -145,7 +145,7 @@
 							  </div>
 							  <div class="form-group">
 							  	<label for="date">Date</label>
-							    <input type="date" name="date" id="date" class="form-control" placeholder="date *" required="required">
+							    <input type="text" name="date" id="date" class="form-control" placeholder="date *" required="required">
 							    <p style="color: red;display: none;" class="error errorDate"></p>
 							    <span><i class="fa fa-calendar" aria-hidden="true"></i></span>
 							  </div>  
@@ -157,6 +157,51 @@
 							  	
 							  <button class="btn btn-warning" type="button" id="book">Book now!</button> 
 						</form>
+						<div class="modal fade" id="myModal" role="dialog">
+						    <div class="modal-dialog">
+						    
+						      <!-- Modal content-->
+						      <div class="modal-content">
+						        <div class="modal-header">
+						          <button type="button" class="close" data-dismiss="modal">&times;</button>
+						          <h4 class="modal-title title_reservations">Bàn đã được đặt</h4>
+						        </div>
+						        <div class="modal-body">
+						          	<table class="table table-striped table-bordered table-hover table-checkable order-column" id="sample_1">
+								         <thead>
+								            <tr>
+								               <th class="stl-column color-column col-sm-2"><label>Tiêu đề</label></th>
+								               <th class="stl-column color-column"><label>Nội dung</label></th> 
+								            </tr>
+								         </thead>
+								         <tbody id="tbodyTable">
+								            <tr>
+								               <td><label>Tên khách hàng</label></td>
+								               <td class="client_name"></td>
+								            </tr>
+								            <tr>
+								               <td><label>Email</label></td>
+								               <td class="email"></td>
+								            </tr>
+								            <tr>
+								               <td><label>Ngày đặt bàn</label></td>
+								               <td class="date"></td>
+								            </tr>
+								            <tr>
+								               <td><label>Số điện thoại người đặt</label></td>
+								               <td class="party_number"></td>
+								            </tr>
+								         </tbody>
+							     	</table>
+						        </div>
+						        <div class="modal-footer">
+						          <p style="text-align: center;">Chúng tôi sẽ liên lạc với quý khách sớm !!!</p>
+						          <button type="button" class="btn btn-danger" data-dismiss="modal" id="close">Close</button>
+						        </div>
+						      </div>
+						      
+    						</div>
+  						</div>
 					</div>
 				</div>
 			</div>
@@ -168,7 +213,7 @@
 
 <script>
 	$(document).ready(function() {
-		
+			$("#date").datepicker();
 			$.ajaxSetup({
 				headers:{
 					"X-CSRF-TOKEN": $("meta[name='_token']").attr('content')
@@ -198,10 +243,18 @@
 			 			$('#date').val("");
 			 			$('#party_number').val("");
 			 			$('.error').hide();
+
+			 			$('.client_name').text(data.client_name);
+			 			$('.email').text(data.email);
+			 			$('.date').text(data.date);
+			 			$('.party_number').text(data.party_number);
+			 			$('#myModal').show();
+			 			$('#myModal').addClass('in');
+
 			 		},
 	            	error: function (data) {
-	            		var error = data.responseJSON;
-	                	console.log('Error:', error);
+	            		var error = data.responseJSON.message;
+	                	console.log('Error:',error);
 	                	$('.error').hide();
 	                	if(error.client_name != undefined){
 	                		$('.errorName').show().text(error.client_name[0]);
@@ -223,9 +276,12 @@
 						});
 	            	}
 				});
-			});
 
-			
+			});
+			$(document.body).on('click','#close', function() {
+				$('#myModal').removeClass("in");
+				$('#myModal').hide();
+			});
 	});
 </script>
 @include('restaurant.footer')

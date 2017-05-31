@@ -4,12 +4,12 @@
 <div class="portlet light bordered">
 <div class="portlet-title">
     <div class="caption uppercase">
-        <i class="fa fa-book"></i> Quản lý lịch hẹn</div>
+        <i class="fa fa-book"></i> Quản lý User</div>
    
 </div>
 <div class="row">
     <div class="col-xs-12 col-sm-4 col-md-6 col-lg-5">
-        <button onclick="addCourse();" class="btn green btn-circle"><i class="fa fa-plus"></i> Thêm mới</button>
+        <button class="btn green btn-circle"><i class="fa fa-plus"></i> Thêm mới</button>
     </div>
     <div class="col-xs-12 col-sm-8 col-md-6 col-lg-7">
         <form method="get" action="">
@@ -23,23 +23,20 @@
             <thead>
                 <tr>
                    <th class="stl-column color-column">#</th>
-                   <th class="stl-column color-column">Tên khách hàng</th>
+                   <th class="stl-column color-column">Name</th>
                    <th class="stl-column color-column">Email</th>
-                   <th class="stl-column color-column">Ngày đặt bàn</th>
-                   <th class="stl-column color-column">Số điện thoại</th>
-                   {{-- <th class="stl-column color-column">Trạng thái</th> --}}
-                   <th class="stl-column color-column">Hành động</th>
+                   <th class="stl-column color-column">Created At</th>
+                   
                 </tr>
                 
             </thead>
             <tbody>
-                @if($listBook) @foreach($listBook as $key => $list)
+                @if(isset($users)) @foreach($users as $key => $user)
                 <tr>
                     <td class="text-center"> {{ $key + 1 }} </td>
-                    <td class="text-center" >{{ $list->client_name }} </td>
-                    <td class="text-center"> {{ $list->email }} </td>
-                    <td class="text-center"> {{ $list->date }} </td>
-                    <td class="text-center"> {{ $list->party_number }} </td>
+                    <td class="text-center"> {{ $user->name }} </td>
+                    <td class="text-center"> ${{ $user->email }} </td>
+                    <td class="text-center"> {{ date('d-m-Y H:i:s ', strtotime($user->created_at)) }} </td>
                     {{-- <td class="text-center"> 
                       @if ($course->status == 1)
                         Hiển thị
@@ -47,20 +44,6 @@
                         Ẩn
                       @endif
                     </td> --}}
-                    <td class="text-center"> 
-                        <a href="{{route('book-tables.show', $list->id)}}" class="btn btn-outline btn-circle btn-sm blue">
-                            <i class="fa fa-eye" aria-hidden="true"></i> Xem 
-                        </a>
-                        <a href="{{route('book-tables.edit', $list->id)}}" class="btn btn-outline btn-circle green btn-sm purple">
-                            <i class="fa fa-edit"></i> Sửa 
-                        </a>
-                        {{-- <form action="#" method="DELETE" style="display: initial;"> --}}
-                          <a href="javascript:;" type="submit" onclick="alertDel({{$list->id}})" class="btn btn-outline btn-circle dark btn-sm red">
-                            <i class="fa fa-trash-o"></i> Xóa 
-                          </a>
-                        {{-- </form> --}}
-                        
-                    </td>
                    
                 </tr>
                 @endforeach @else
@@ -78,7 +61,7 @@
 <script>
  function alertDel(id){
 
-  var path = "{{URL::asset('')}}/admin/book-tables/" + id;
+  var path = "{{URL::asset('')}}list-food/" + id;
 
     swal({
         title: "Bạn có chắc muốn xóa?",
@@ -129,7 +112,7 @@
  <script src="{{url('js/curd-Course.js')}}" type="text/javascript"></script>
  <script>
      function addCourse() {
-         window.location = "{{route('book-tables.create')}}"
+         window.location = "{{route('list-food.create')}}"
      }
  </script>
 @endsection

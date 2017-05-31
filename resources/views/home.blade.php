@@ -34,11 +34,11 @@
     </div>
     <div class="details">
         <div class="number">
-            <span data-counter="counterup" data-value="0">0</span> <i class="fa fa-comments" aria-hidden="true"></i>
+            <span data-counter="counterup" data-value="0">{{$users}}</span> <i class="icon-user" aria-hidden="true"></i>
         </div>
-        <div class="desc"> New Feedbacks </div>
+        <div class="desc">Users</div>
     </div>
-    <a class="more" href=""> View more
+    <a class="more" href="{{route('users.index')}}"> View more
         <i class="m-icon-swapright m-icon-white"></i>
     </a>
 </div>
@@ -46,14 +46,14 @@
 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
 <div class="dashboard-stat red">
     <div class="visual">
-        <i class="fa fa-graduation-cap"></i>
+        <i class="fa fa-glass"></i>
     </div>
     <div class="details">
         <div class="number">
-            <span data-counter="counterup" data-value="0">0</span> <span class="icon-user"></span></div>
-        <div class="desc"> Student </div>
+            <span data-counter="counterup" data-value="0">{{$foods}}</span> <span class="fa fa-glass"></span></div>
+        <div class="desc"> Food </div>
     </div>
-    <a class="more" href="#"> View more
+    <a class="more" href="{{route('list-food.index')}}"> View more
         <i class="m-icon-swapright m-icon-white"></i>
     </a>
 </div>
@@ -65,11 +65,11 @@
     </div>
     <div class="details">
         <div class="number">
-            <span data-counter="counterup" data-value="0">0</span> <i class="fa fa-th" aria-hidden="true"></i>
+            <span data-counter="counterup" data-value="0">{{$menus}}</span> <i class="fa fa-th" aria-hidden="true"></i>
         </div>
-        <div class="desc"> ClassRoom </div>
+        <div class="desc"> Category Foods </div>
     </div>
-    <a class="more" href="#"> View more
+    <a class="more" href="{{route('list-menu.index')}}"> View more
         <i class="m-icon-swapright m-icon-white"></i>
     </a>
 </div>
@@ -77,14 +77,14 @@
 <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
 <div class="dashboard-stat purple">
     <div class="visual">
-        <i class="fa fa-globe"></i>
+        <i class="fa fa-cc-paypal"></i>
     </div>
     <div class="details">
         <div class="number">
-            <span data-counter="counterup" data-value="0">0</span><i class="fa fa-graduation-cap" aria-hidden="true"></i></div>
-        <div class="desc"> Course </div>
+            <span data-counter="counterup" data-value="0">{{$book_tables}} </span><i class="fa fa-cc-paypal" aria-hidden="true"></i></div>
+        <div class="desc"> Book Tables </div>
     </div>
-    <a class="more" href="#"> View more
+    <a class="more" href="{{route('book-tables.index')}}"> View more
         <i class="m-icon-swapright m-icon-white"></i>
     </a>
 </div>

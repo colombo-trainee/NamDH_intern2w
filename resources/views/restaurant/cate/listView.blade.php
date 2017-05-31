@@ -76,7 +76,7 @@
 <script>
  function alertDel(id){
 
-  var path = "{{URL::asset('')}}list-menu/" + id;
+  var path = "{{URL::asset('')}}/admin/list-menu/" + id;
 
     swal({
         title: "Bạn có chắc muốn xóa?",
