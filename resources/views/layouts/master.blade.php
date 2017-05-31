@@ -245,11 +245,11 @@
                                     </li>
                                     <li class="divider"> </li>
                                     <li>
-                                        <a href="{{ url('students/logout') }}"
+                                        <a href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
                                                  document.getElementById('logout-form').submit();">
                                         <i class="icon-key"></i> Đăng xuất </a>
-                                        <form id="logout-form" action="{{ url('students/logout') }}" method="POST" style="display: none;">
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                             <input type="hidden" name="_token" value="{{ csrf_token() }}">
                                         </form>
                                     </li>

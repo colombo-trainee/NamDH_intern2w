@@ -40,4 +40,8 @@ class LoginController extends Controller
         $user = User::select("*")->take(1)->get();
         return view("auth.login",compact('user'));
     }
+    public function logout(){
+        Auth::logout();
+        return redirect()->route('login');   
+    }
 }
