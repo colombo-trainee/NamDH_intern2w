@@ -20,9 +20,7 @@ Auth::routes();
 
 Route::group(['prefix'=>'admin'],function(){
 	
-	Route::get('/login', function () {
-    	return view('auth.login');
-	});	
+	Route::get('/login',"Auth\LoginController@index");
 	// route Menu phía user
 	Route::get('/home', 'HomeController@index')->name('home');
 	// route Category phía admin

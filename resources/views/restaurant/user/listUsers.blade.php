@@ -35,7 +35,7 @@
                 <tr>
                     <td class="text-center"> {{ $key + 1 }} </td>
                     <td class="text-center"> {{ $user->name }} </td>
-                    <td class="text-center"> ${{ $user->email }} </td>
+                    <td class="text-center"> {{ $user->email }} </td>
                     <td class="text-center"> {{ date('d-m-Y H:i:s ', strtotime($user->created_at)) }} </td>
                     {{-- <td class="text-center"> 
                       @if ($course->status == 1)
