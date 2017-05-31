@@ -315,7 +315,7 @@
                                 <!-- END RESPONSIVE QUICK SEARCH FORM -->
                             </li>
                             <li class="nav-item start">
-                                <a href="{{{{ route('home') }}}}" class="nav-link nav-toggle">
+                                <a href="{{ route('home') }}" class="nav-link nav-toggle">
                                     <i class="icon-home"></i>
                                     <span class="title">Bảng điều khiển</span>
                                 </a>
@@ -327,9 +327,8 @@
                                     <span class="title">Users</span>
                                 </a>
                             </li>
-                            {{-- 
 
-                            <li class="nav-item start">
+                            {{-- <li class="nav-item start">
                                 <a href="{{url('/')}}" class="nav-link nav-toggle">
                                     <i class="fa fa-user-secret" aria-hidden="true"></i>
                                     <span class="title">Vai trò</span>
