@@ -4,9 +4,10 @@
 /vendor
 /.idea
 /.vagrant
+/public/images/*.jpg
 Homestead.json
 Homestead.yaml
 npm-debug.log
-/public/images/*.jpg
+
 
 
