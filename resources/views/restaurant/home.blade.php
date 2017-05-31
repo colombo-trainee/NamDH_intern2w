@@ -146,9 +146,8 @@
 							  <div class="form-group">
 							  	<label for="date">Date</label>
 							    <input type="date" name="date" id="date" class="form-control" placeholder="date *" required="required">
+							    <p style="color: red;display: none;" class="error errorDate"></p>
 							    <span><i class="fa fa-calendar" aria-hidden="true"></i></span>
-
-						     	<p style="color: red;display: none;" class="error errorDate"></p>
 							  </div>  
 							  <div class="form-group">
 							  	<label for="party">Party Number</label>
