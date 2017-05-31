@@ -23,7 +23,7 @@ Route::group(['prefix'=>'admin'],function(){
 	Route::get('/login',"Auth\LoginController@index")->name('login');
 	Route::get('/logout',"Auth\LoginController@logout")->name('logout');
 	// route Menu phía user
-	Route::get('/home', 'HomeController@index')->name('home');
+	Route::get('/', 'HomeController@index')->name('home');
 	// route Category phía admin
 	Route::resource('/list-menu','ListMenuController');
 

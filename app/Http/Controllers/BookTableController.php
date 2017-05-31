@@ -55,13 +55,12 @@ class BookTableController extends Controller
                 'date.required'        => "Date must be required",
                 'date.after'           => "Date must after today",
                 'party_number.required'=> "party_number must be required",
-                'party_number.digits_between:9,11' => "party_number between 9 - 11 digits",
             ];
             $validator =  Validator::make($data, [
                 'client_name'   =>  'required',
                 'email'         =>  'required|email|unique:book_tables',
                 'date'          =>  'required|after:today',
-                'party_number'  =>  'required|digits_between:9,11',
+                'party_number'  =>  'required',
             ],$message);
 
             if($validator->fails()){
