@@ -6,9 +6,9 @@
 
 ## Link Product
 
-<h3>Link HTML<a href="https://dinhhoainam23894.github.io/NamDH_internship2w/">Link html</a></h3>
-<h3>Link Homepage<a href="http://laravelintern2w.herokuapp.com/">Link preview</a></h3>
-<h3>Link Admin<a href="http://laravelintern2w.herokuapp.com/admin/">Link admin</a></h3>
+<h3>Link HTML: <a href="https://dinhhoainam23894.github.io/NamDH_internship2w/">Link html</a></h3>
+<h3>Link Homepage: <a href="http://laravelintern2w.herokuapp.com/">Link preview</a></h3>
+<h3>Link Admin: <a href="http://laravelintern2w.herokuapp.com/admin/">Link admin</a></h3>
 
 ## Code
 
